@@ -7,6 +7,7 @@ namespace AddressAPI.Models
 {
     public class Address
     {
+        public int Id { get; set; }
         public string Street { get; set; }
         public int HouseNr { get; set; }
         public string ZipCode { get; set; }
