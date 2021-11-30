@@ -11,12 +11,22 @@ namespace AddressAPI.Repositories
     /// </summary>
     public interface IAddressRespository
     {
+        /// <summary>
+        /// Interface for Part 1: General API       Part 2: Filters
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<Address>> Get();
         Task<Address> Get(int id);
         Task<Address> Create(Address address);
         Task Update(Address address);
         Task Delete(int id);
 
+        /// <summary>
+        ///    Interface for Part 2: Filters
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<Address> FilterAddressById(int id);
 
     }
 }

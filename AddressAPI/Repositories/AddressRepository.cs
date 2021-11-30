@@ -46,5 +46,11 @@ namespace AddressAPI.Repositories
             _context.Entry(address).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Address>  FilterAddressById(int id)
+        {
+            return null;
+
+        }
     }
 }
