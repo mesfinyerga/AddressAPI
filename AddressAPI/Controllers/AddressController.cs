@@ -14,6 +14,7 @@ namespace AddressAPI.Controllers
     public class AddressController : ControllerBase
     {
         private readonly IAddressRespository _addressRepository;
+        public static List<Address> allAddresees = new List<Address>();
 
         /// <summary>
         /// This is Part 1: API General
@@ -24,11 +25,14 @@ namespace AddressAPI.Controllers
             _addressRepository = addressRepository;
         }
 
+       
+
         [HttpGet]
         public async Task<IEnumerable<Address>> GetAddresses()
         {
             return await _addressRepository.Get();
         }
+
 
         [HttpGet("{id}")]
         public async  Task<ActionResult<Address>> GetAddresses(int id)
@@ -36,6 +40,7 @@ namespace AddressAPI.Controllers
             return await _addressRepository.Get(id);
         }
 
+     
         [HttpPost]
         public async Task<ActionResult<Address>> PostAddresses([FromBody] Address address)
         {
@@ -66,8 +71,7 @@ namespace AddressAPI.Controllers
             await _addressRepository.Delete(addressToDelete.Id);
             return NoContent();
         }
-
-       
+             
 
 
     }

@@ -1,4 +1,5 @@
 ﻿using AddressAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 namespace AddressAPI.Repositories
 {
     /// <summary>
-    /// This interface is used to operform opration of the database
+    /// This interface is used to perform the opration of the database
     /// </summary>
     public interface IAddressRespository
     {
         /// <summary>
-        /// Interface for Part 1: General API       Part 2: Filters
+        /// Interface for Part 1: General API       
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<Address>> Get();
@@ -22,11 +23,13 @@ namespace AddressAPI.Repositories
         Task Delete(int id);
 
         /// <summary>
-        ///    Interface for Part 2: Filters
+        ///    Interface for Part 2: Filters used to filter and search by city, street , zipcode, country ...
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<Address> FilterAddressById(int id);
+        
+        List<AddressModel> GetAddressByFilter(string search);
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AddressAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -47,10 +48,33 @@ namespace AddressAPI.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Address>  FilterAddressById(int id)
+        public List<AddressModel> GetAddressByFilter(string search)
         {
-            return null;
+            var allAddresses = _context.Addresses.AsQueryable();
+            if (!string.IsNullOrEmpty(search))
+            {
+                allAddresses = allAddresses.Where(
+                  aa => aa.City.Contains(search)
+                ||aa.Country.Contains(search)
+                ||aa.ZipCode.Contains(search)
+                || aa.Street.Contains(search)
+                ||aa.Id.Equals(search));
+               
+            }
 
+            var result = allAddresses.Select(aa => new AddressModel {
+                City = aa.City, 
+                Country = aa.Country,
+                HouseNr=aa.HouseNr, 
+                Id=aa.Id, 
+                Street=aa.Street, 
+                ZipCode=aa.ZipCode
+                
+            });
+
+            return result.ToList();
         }
+
+       
     }
 }
