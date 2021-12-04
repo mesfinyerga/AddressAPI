@@ -28,7 +28,7 @@ namespace AddressAPI.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         
-        List<AddressModel> GetAddressByFilter(string search);
+        List<AddressModel> GetAddressByFilter(string search, string sortBy);
 
 
     }

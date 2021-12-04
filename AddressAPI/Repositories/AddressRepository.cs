@@ -48,9 +48,10 @@ namespace AddressAPI.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public List<AddressModel> GetAddressByFilter(string search)
+        public List<AddressModel> GetAddressByFilter(string search, string sortBy)
         {
             var allAddresses = _context.Addresses.AsQueryable();
+            #region search and filter
             if (!string.IsNullOrEmpty(search))
             {
                 allAddresses = allAddresses.Where(
@@ -61,6 +62,33 @@ namespace AddressAPI.Repositories
                 ||aa.Id.Equals(search));
                
             }
+            #endregion
+
+            #region here is the sorting part
+            // default sorting will be by country
+            allAddresses = allAddresses.OrderBy(aa => aa.Country);
+            if(!string.IsNullOrEmpty(sortBy))
+            {
+                switch(sortBy)
+                {
+                    case "country_desc": allAddresses = allAddresses.OrderByDescending(aa => aa.Country); break;
+                    case "city_asc": allAddresses = allAddresses.OrderBy(aa => aa.City); break;
+                    case "city_desc": allAddresses = allAddresses.OrderByDescending(aa => aa.City); break;
+                    case "zipCode_asc": allAddresses = allAddresses.OrderBy(aa => aa.ZipCode); break;
+                    case "zipCode_desc": allAddresses = allAddresses.OrderByDescending(aa => aa.ZipCode); break;
+                    case "street_asc": allAddresses = allAddresses.OrderBy(aa => aa.Street); break;
+                    case "street_desc": allAddresses = allAddresses.OrderByDescending(aa => aa.Street); break;
+                    case "housenr_desc": allAddresses = allAddresses.OrderBy(aa => aa.HouseNr); break;
+                    case "houseNr_desc": allAddresses = allAddresses.OrderByDescending(aa => aa.HouseNr); break;
+                    case "id_asc": allAddresses = allAddresses.OrderBy(aa => aa.Id); break;
+                    case "id_desc": allAddresses = allAddresses.OrderByDescending(aa => aa.Id); break;
+
+
+                }
+
+            }
+
+            #endregion
 
             var result = allAddresses.Select(aa => new AddressModel {
                 City = aa.City, 

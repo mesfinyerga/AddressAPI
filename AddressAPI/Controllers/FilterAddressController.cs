@@ -19,11 +19,11 @@ namespace AddressAPI.Controllers
             _addressRepository = addressRepository;
         }
         [HttpGet]
-        public IActionResult GetAllAddresses(string search)
+        public IActionResult GetAllAddresses(string search, string sortBy)
         {
             try
             {
-                var result = _addressRepository.GetAddressByFilter(search);
+                var result = _addressRepository.GetAddressByFilter(search,  sortBy);
                 return Ok(result);
             }
             catch
