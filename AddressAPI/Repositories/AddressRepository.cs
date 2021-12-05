@@ -1,10 +1,13 @@
 ﻿using AddressAPI.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace AddressAPI.Repositories
 {
@@ -103,6 +106,30 @@ namespace AddressAPI.Repositories
             return result.ToList();
         }
 
-       
+        public double GetDistance(string origin, string destination)
+        {
+
+            string url = @"http://maps.googleapis.com/maps/api/distancematrix/xml?origins=" +
+                         origin + "&destinations=" + destination +
+                         "&mode=driving&sensor=false&language=en-EN&units=metric&key=AIzaSyAsIBonpOOQQVrIQKO2HSuCM2K1gQYJXZ8";
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            WebResponse response = request.GetResponse();
+            Stream dataStream = response.GetResponseStream();
+            StreamReader sreader = new StreamReader(dataStream);
+            string responsereader = sreader.ReadToEnd();
+            response.Close();
+
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.LoadXml(responsereader);
+
+            if (xmldoc.GetElementsByTagName("status")[0].ChildNodes[0].InnerText == "OK")
+            {
+                XmlNodeList distance = xmldoc.GetElementsByTagName("distance");
+                return Convert.ToDouble(distance[0].ChildNodes[1].InnerText.Replace("KM ", ""));
+            }
+
+            return 0;
+        }
     }
 }

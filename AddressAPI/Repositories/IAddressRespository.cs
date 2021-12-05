@@ -30,6 +30,15 @@ namespace AddressAPI.Repositories
         
         List<AddressModel> GetAddressByFilter(string search, string sortBy);
 
+        /// <summary>
+        /// This part is for findind the distance between two points using google distance matrix api
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
+         double GetDistance(string origin, string destination);
+
+
 
     }
 }
