@@ -21,6 +21,7 @@ You can also Filter by the following cases:
 "houseNr_desc"
 "id_asc"
 "id_desc"
+- The third part of this project is to find distance between two points. Here I used google map distance matrix api to calculated the distance between the original address and the destination address.
 
 
 
